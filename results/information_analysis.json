@@ -1,0 +1,46 @@
+{
+  "sample": 300,
+  "chars_per_token": 4.994,
+  "unigram_entropy_bits_per_token_H1": 9.208,
+  "conditional_entropy_bits_per_token_Hcond": 2.525,
+  "bits_per_char_equivalent": 0.506,
+  "complex_symbols_per_token_D": 16,
+  "effective_bits_per_symbol_at_Hcond": 0.1578,
+  "capacity_per_token": {
+    "0dB": {
+      "capacity_bits_per_symbol": 1.0,
+      "capacity_bits_per_token": 16.0,
+      "source_rate_over_capacity": 0.1578
+    },
+    "3dB": {
+      "capacity_bits_per_symbol": 1.583,
+      "capacity_bits_per_token": 25.32,
+      "source_rate_over_capacity": 0.0997
+    },
+    "6dB": {
+      "capacity_bits_per_symbol": 2.316,
+      "capacity_bits_per_token": 37.06,
+      "source_rate_over_capacity": 0.0681
+    },
+    "9dB": {
+      "capacity_bits_per_symbol": 3.161,
+      "capacity_bits_per_token": 50.57,
+      "source_rate_over_capacity": 0.0499
+    },
+    "12dB": {
+      "capacity_bits_per_symbol": 4.075,
+      "capacity_bits_per_token": 65.19,
+      "source_rate_over_capacity": 0.0387
+    },
+    "15dB": {
+      "capacity_bits_per_symbol": 5.028,
+      "capacity_bits_per_token": 80.44,
+      "source_rate_over_capacity": 0.0314
+    },
+    "18dB": {
+      "capacity_bits_per_symbol": 6.002,
+      "capacity_bits_per_token": 96.03,
+      "source_rate_over_capacity": 0.0263
+    }
+  }
+}

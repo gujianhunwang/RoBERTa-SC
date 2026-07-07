@@ -1,0 +1,15 @@
+torch>=2.0
+transformers>=4.30,<4.45
+datasets>=2.10
+numpy>=1.23
+scipy>=1.9
+scikit-learn>=1.1
+nltk>=3.8
+tqdm>=4.64
+scikit-commpy>=0.8.0
+calflops>=0.3.0
+bert-score>=0.3.12
+w3lib>=2.0
+pyyaml>=6.0
+matplotlib>=3.5
+sentence-transformers>=2.2

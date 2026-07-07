@@ -1,0 +1,18 @@
+# cache / build
+__pycache__/
+*.pyc
+*.egg-info/
+.ipynb_checkpoints/
+
+# data & checkpoints (large; not tracked)
+data/*.pkl
+data/Eurp/
+*.pt
+*.pth
+runs/
+pretrain_model/
+roberta-base/
+bert-base-uncased/
+
+# results are small JSON; keep them
+!results/*.json

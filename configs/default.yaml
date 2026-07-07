@@ -1,0 +1,23 @@
+# default configuration for RoBERTa-SC
+
+model:
+  model_path: roberta-base   # path to pretrained RoBERTa-base (local dir or HF id)
+  c_in: 32                   # real channel dims per token -> 16 complex symbols/token
+  hidden_size: 768
+
+channel:
+  type: rayleigh             # awgn | rayleigh
+  train_snr_db: [0.0, 20.0]  # SNR range sampled per example during training
+  perfect_csi: true
+
+train:
+  batch_size: 64
+  grad_accum: 10
+  lr: 1.0e-4
+  weight_decay: 0.1
+  max_steps: 1000
+  warmup: 10
+
+eval:
+  snrs: [0, 3, 6, 9, 12, 15, 18]
+  sample: 200

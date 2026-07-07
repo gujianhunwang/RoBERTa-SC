@@ -1,0 +1,29 @@
+{
+  "seq_len": 512,
+  "c_in": 32,
+  "symbols_per_token": 16,
+  "params": {
+    "total": 126921849,
+    "trainable": 41470329,
+    "frozen": 85451520,
+    "trainable_ratio_pct": 32.67,
+    "total_MB_fp32": 484.2,
+    "trainable_MB_fp32": 158.2
+  },
+  "transmitter_params": 1608480,
+  "transmitter_MB_fp32": 6.14,
+  "flops": {
+    "transmitter_GFLOPs": 0.0,
+    "receiver_GFLOPs": 274.9775,
+    "end_to_end_GFLOPs": 274.9775,
+    "transmitter_GMACs": 0.0,
+    "receiver_GMACs": 137.3999
+  },
+  "peak_gpu_memory_MB": 620.2,
+  "latency": {
+    "transmitter_ms_gpu": 0.101,
+    "receiver_ms_gpu": 8.419,
+    "end_to_end_ms_gpu": 8.52,
+    "transmitter_ms_cpu": 0.09
+  }
+}
