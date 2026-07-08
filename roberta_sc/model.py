@@ -137,8 +137,14 @@ class RobertaSC(nn.Module):
                  hidden_size: int = 768, channel: str = "rayleigh",
                  train_snr_range=(0.0, 20.0), train_snr_skew: float = 1.0,
                  s2e_depth: int = 2, repel_margin: float = 0.0,
-                 repel_weight: float = 0.0, s2e_activation: bool = True):
+                 repel_weight: float = 0.0, s2e_activation: bool = None):
         super().__init__()
+        # Auto-detect activation: s2e_depth==2 matches the original pure-linear
+        # S2E architecture (linear0→linear1, no GELU).  For deeper S2E, GELU
+        # activations are required to make the extra layers useful.
+        if s2e_activation is None:
+            s2e_activation = (s2e_depth > 2)
+
         config = RobertaConfig.from_pretrained(model_path)
         config.hidden_size = hidden_size
         self.bert = RobertaForMaskedLM.from_pretrained(model_path, config=config)

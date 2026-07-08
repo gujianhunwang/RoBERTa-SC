@@ -75,7 +75,11 @@ def main():
     ap.add_argument("--snr_skew", type=float, default=1.0,
                     help=">1 biases the training-SNR curriculum toward low SNR")
     ap.add_argument("--s2e_depth", type=int, default=2,
-                    help="depth of S2E MLP (2=original, 3=deeper for small c_in)")
+                    help="depth of S2E MLP (2=original pure-linear, >=3 adds GELU)")
+    ap.add_argument("--s2e_activation", dest="s2e_activation", action="store_true", default=None,
+                    help="force GELU activations in S2E (auto: s2e_depth>2)")
+    ap.add_argument("--no_s2e_activation", dest="s2e_activation", action="store_false",
+                    help="force pure-linear S2E (no activations)")
     ap.add_argument("--clean_snr_prob", type=float, default=0.0,
                     help="fraction of batches trained at very high SNR to combat error floor")
     ap.add_argument("--clean_freq", type=int, default=100,
@@ -106,6 +110,7 @@ def main():
     model = RobertaSC(model_path=args.model_path, c_in=args.c_in, channel=args.channel,
                       train_snr_range=(args.snr_min, args.snr_max),
                       train_snr_skew=args.snr_skew, s2e_depth=args.s2e_depth,
+                      s2e_activation=args.s2e_activation,
                       repel_margin=args.repel_margin,
                       repel_weight=args.repel_weight).to(dev)
     if args.init_from:
