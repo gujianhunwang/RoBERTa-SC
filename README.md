@@ -155,10 +155,11 @@ does not require long-range context; this allows a large batch size.
 
 ```bash
 python scripts/train.py --model_path roberta-base \
-    --train /path/to/stage1_books_384.pkl \
-    --channel rayleigh --c_in 16 --s2e_depth 3 \
-    --batch_size 320 --grad_accum 2 --max_len 192 \
-    --max_steps 5000 --warmup 150 --lr 1.5e-4 \
+    --train ~/autodl-tmp/stage1_books_384.pkl \
+    --val   ../src/data/Eurp_tokens_robert_val.pkl \
+    --channel rayleigh --c_in 32  \
+    --batch_size 100 --grad_accum 2 --max_len 512 \
+    --max_steps 3000 --warmup 25 --lr 1.5e-4 \
     --snr_skew 5.0 --snr_min 0 --snr_max 20 \
     --repel_margin 1.0 --repel_weight 0.02 \
     --out_dir runs/stage1
@@ -182,17 +183,29 @@ robustness.
 
 ```bash
 python scripts/train.py --model_path roberta-base \
-    --train data/Eurp_tokens_robert_train.pkl \
-    --val   data/Eurp_tokens_robert_val.pkl \
-    --channel rayleigh --c_in 16 --s2e_depth 3 \
-    --batch_size 128 --grad_accum 2 --max_len 384 \
-    --max_steps 4000 --warmup 80 --lr 1e-4 \
-    --snr_min -5 --snr_max 15 --snr_skew 3.0 \
+    --train ../src/data/Eurp_tokens_robert_train.pkl \
+    --val   ../src/data/Eurp_tokens_robert_val.pkl \
+    --channel rayleigh --c_in 32 --s2e_depth 3 \
+    --batch_size 128 --grad_accum 2 --max_len 512 \
+    --max_steps 1000 --warmup 80 --lr 1e-4 \
+    --snr_min 0 --snr_max 18 --snr_skew 3.0 \
     --clean_snr_prob 0.03 --clean_freq 60 \
     --repel_margin 0.5 --repel_weight 0.01 \
-    --init_from runs/stage1/model_05000.pt \
+    --init_from runs/stage1/model_01100.pt \
     --out_dir runs/stage2
 ```
+
+python scripts/train.py --model_path roberta-base \
+    --train ../src/data/Eurp_tokens_robert_train.pkl \
+    --val   ../src/data/Eurp_tokens_robert_val.pkl \
+    --channel rayleigh --c_in 32 \
+    --batch_size 64 --grad_accum 2 --max_len 512 \
+    --max_steps 3000 --warmup 80 --lr 1e-4 \
+    --snr_min 0 --snr_max 18 --snr_skew 3.0 \
+    --clean_snr_prob 0.03 --clean_freq 60 \
+    --repel_margin 0.5 --repel_weight 0.01 \
+    --init_from runs/stage1/model_best.pt \
+    --out_dir runs/stage2
 
 **What the extra parameters do in Stage 2:**
 
@@ -229,7 +242,7 @@ checkpoint path and the `--c_in` / `--s2e_depth` flags shown in the table
 above.
 
 ```bash
-VAL=data/Eurp_sentences_robert_val.pkl       # (produced by preprocess_europarl.py)
+VAL=../src/data/Eurp_sentences_robert_val.pkl       # (produced by preprocess_europarl.py)
 MODEL=roberta-base
 BERT=bert-base-uncased
 ```
@@ -237,12 +250,12 @@ BERT=bert-base-uncased
 ### 8 complex symbols per token (`c_in = 16`, revised paper)
 
 ```bash
-CKPT=runs/beats4/model_best.pt
+CKPT=runs/stage2/model_best.pt
 
 python scripts/evaluate.py --checkpoint $CKPT --model_path $MODEL \
     --val $VAL --channel awgn  --c_in 16 --s2e_depth 3
 python scripts/evaluate.py --checkpoint $CKPT --model_path $MODEL \
-    --val $VAL --channel rayleigh --c_in 16 --s2e_depth 3
+    --val $VAL --channel rayleigh --c_in 32 --s2e_depth 3
 python scripts/semantic_eval.py --checkpoint $CKPT --model_path $MODEL \
     --bert_path $BERT --val $VAL --channel awgn --c_in 16 --s2e_depth 3
 python scripts/complexity.py --checkpoint $CKPT --model_path $MODEL \
